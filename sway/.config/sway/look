@@ -1,0 +1,21 @@
+# gaps
+gaps inner 8px 
+gaps outer 4px 
+
+# font
+font pango:IosevkaNerdFont 12 "#ss20"
+
+# pywal
+include $HOME/.cache/wal/colors-sway
+
+# wallpaper
+output * bg $wallpaper fill scale 2
+client.focused $color0 $background $foreground $color7 $background
+
+# no border
+default_border none
+
+# waybar
+# bar swaybar_command waybar
+# yambar
+exec_always sh -c "killall yambar; yambar &"
