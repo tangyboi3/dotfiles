@@ -1,21 +1,12 @@
-# Typical laptop setup, with wifi, brightness, battery etc, for
-# i3/Sway.
+# Colors
 
-# For X11/i3, you'll want to replace calls to swaymsg with i3-msg, and
-# the sway-xkb module with the xkb module.
 
-# fonts we'll be re-using here and there
-icon-margin: &icon-margin {left-margin: 6, right-margin: 6} 
-std_underline: &std_underline {underline: { size: 2, color: ff0000ff}}
-
-# This is THE bar configuration
 bar:
   height: 40
   location: top
   spacing: 5
-  margin: 7
+  margin: 10
 
-  # Default font
   font: IosevkaNerdFont:pixelsize=32:fontfeatures=ss20
 
   foreground: ffffffff
@@ -27,26 +18,38 @@ bar:
     margin: 5
     top-margin: 0
 
+  left:
+    - alsa:
+         card: hw:PCH
+         mixer: Master
+         content:
+           map:
+             conditions:
+               ~online: {string: {text: , foreground: ff0000ff}}
+               online:
+                 map:
+                   on-click: /bin/sh -c "amixer -q sset Speaker unmute && amixer -q sset Headphone unmute && amixer -q sset Master toggle"
+                   conditions:
+                     muted: {string: {text: 󰝟, foreground: ffffff66, right-margin: 8}}
+                     ~muted:
+                       ramp:
+                         tag: percent
+                         items:
+                           - string: {text: , right-margin: 8}
+                           - string: {text: , right-margin: 8}
+                           - string: {text: , right-margin: 8}
+
   center:
     - i3:
         anchors: # Not used (directly) by f00bar; used here to avoid duplication
           - string: &i3_common {margin: 5, on-click: "swaymsg --quiet workspace {name}"}
           - string: &default {<<: *i3_common, text:  "{name}"}
           - focused: &focused
-              deco: {stack: [background: {color: ffa0a04c}, <<: *std_underline]}
+              deco: {stack: [background: {color: ffa0a04c}]}
           - invisible: &invisible {foreground: ffffff55}
           - urgent: &urgent
               foreground: 000000ff
-              deco: {stack: [background: {color: bc2b3fff}, <<: *std_underline]}
-          - map: &i3_mode
-              default:
-                - string:
-                    margin: 5
-                    text: "{mode}"
-                    deco: {background: {color: cc421dff}}
-                - empty: {right-margin: 7}
-              conditions:
-                mode == default: {empty: {}}
+              deco: {stack: [background: {color: bc2b3fff}]}
         content:
           "":
             map:
@@ -54,44 +57,6 @@ bar:
                 state == focused:   {string: {<<: [*default, *focused]}}
                 state == unfocused: {string: {<<: *default}}
                 state == invisible: {string: {<<: [*default, *invisible]}}
-    - foreign-toplevel:
-        content:
-          map:
-            conditions:
-              ~activated: {empty: {}}
-              activated:
-                - string: {text: "{app-id}", foreground: ffa0a0ff}
-                - string: {text: ": {title}"}
-# center:
-#   - mpd:
-#       host: /run/mpd/socket
-#       anchors:
-#         list: &artist_album_title
-#           spacing: 0
-#           items:
-#             - map:
-#                 conditions:
-#                   state == playing: {string: {text: "{artist}"}}
-#                   state == paused: {string: {text: "{artist}", foreground: ffffff66}}
-#             - string: {text: " | ", foreground: ffffff66}
-#             - map:
-#                 conditions:
-#                   state == playing: {string: {text: "{album}"}}
-#                   state == paused: {string: {text: "{album}", foreground: ffffff66}}
-#             - string: {text: " | ", foreground: ffffff66}
-#             - map:
-#                 conditions:
-#                   state == playing: {string: {text: "{title}", foreground: ffa0a0ff}}
-#                   state == paused: {string: {text: "{title}", foreground: ffffff66}}
-#
-#       content:
-#         map:
-#           margin: 10
-#           conditions:
-#             state == offline: {string: {text: offline, foreground: ff0000ff}}
-#             state == stopped: {string: {text: stopped}}
-#             state == paused: {list: *artist_album_title}
-#             state == playing: {list: *artist_album_title}
 
   right:
    - battery:
@@ -114,7 +79,7 @@ bar:
                       - string: {text: ,}
                       - string: {text: ,}
                       - string: {text: , foreground: 00ff00ff}
-                - string: {text: " {capacity}%"}
+                - string: {text: " {capacity}%", right-margin: 5}
         content:
           map:
             conditions:
@@ -124,10 +89,10 @@ bar:
                 <<: *discharging
               state == charging:
                 - string: {text: , foreground: 00ff00ff}
-                - string: {text: " {capacity}%"}
+                - string: {text: " {capacity}%", right-margin: 5}
               state == full:
                 - string: {text: , foreground: 00ff00ff}
-                - string: {text: " {capacity}% full"}
+                - string: {text: " {capacity}% full", right-margin: 5}
               state == "not charging":
                 - ramp:
                     tag: capacity
@@ -142,7 +107,7 @@ bar:
                       - string: {text:  , foreground: 00ff00ff}
                       - string: {text:  , foreground: 00ff00ff}
                       - string: {text:  , foreground: 00ff00ff}
-                - string: {text: " {capacity}%"}
+                - string: {text: " {capacity}%", right-margin: 5}
    - clock:
         time-format: "%H:%M"
         date-format: "%m/%d"
@@ -154,4 +119,4 @@ bar:
           string:
             on-click: systemctl poweroff
             text: 
-            right-margin: 30
+            right-margin: 12
