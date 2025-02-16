@@ -7,15 +7,14 @@ sudo pacman -S sway sway-contrib zsh stow foot kdeconnect yazi firefox freecad b
 ### Firefox
 [pywalfox](https://addons.mozilla.org/en-US/firefox/addon/pywalfox/)
 
-### Install
+### Clone repo and stow
 ```bash
-cd ~
 git clone https://codeberg.org/tangy/dotfiles
 cd dotfiles
-stow */
+stow */ -t ~
 ```
 
-### Adding New Configs
+## Adding New Configs
 Run
 ```bash
 dotmv foo bar
