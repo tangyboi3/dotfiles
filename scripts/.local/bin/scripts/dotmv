@@ -1,29 +1,19 @@
 #!/bin/sh
 
 curdir=$(pwd)
-# package name from second
 pkg=$1
-
-# Strip the /home/$USER part
-dir=$(dirname "$(realpath "$2")" | sed "s|^$HOME/||")
-# echo $dir
-
-# Make dotfiles dir
+filepath=$(realpath $2) 
+relpath="${filepath/#${HOME}\//}"
+dir=$(dirname $relpath)
 dotdir=$HOME/dotfiles/$pkg/$dir
-mkdir -p $dotdir
-echo
-echo "moving: "
 
-for ((i = 2; i <= $#; i++)); do
-    arg="${!i}"
-    filepath=$(realpath "${!i}")
-    relpath="${filepath/#${HOME}\//}"
-    echo $relpath
-    mv $filepath $dotdir
-done
-
+echo "moving: ~/"$relpath
 echo
 echo "to: ~/dotfiles/"$pkg
+
+mkdir -p $dotdir
+mv $filepath $dotdir
+
 cd $HOME/dotfiles
 stow $pkg
 cd $curdir
