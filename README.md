@@ -12,18 +12,11 @@ sudo pacman -S sway sway-contrib zsh stow foot kdeconnect yazi firefox freecad b
 git clone https://codeberg.org/tangy/dotfiles
 cd dotfiles
 stow */ -t ~
+wal -i ~/.local/share/wallpapers/
 ```
 
 ## Adding New Configs
-Run
 ```bash
-dotmv foo bar
+dotmv pkgname filepath
 ```
-replacing `foo` with the package name and `bar` with the target directory, eg `foot` and `.config/foot`.
-## Todo
-- [ ] notifications
-- [ ] yambar, fuzzel config
-- [ ] gtk
-- [ ] cursor
-- [ ] order pywal colors, put light colors on top
-- [ ] neofetch alt
+eg `dotmv neofetch ~/.config/neofetch/`
