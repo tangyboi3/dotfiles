@@ -1,5 +1,63 @@
-# Colors
 
+i3: &i3
+  i3:
+    anchors: # Not used (directly) by f00bar; used here to avoid duplication
+      - string: &i3_common {margin: 5, on-click: "swaymsg --quiet workspace {name}"}
+      - string: &default {<<: *i3_common, text:  "{name}"}
+      - focused: &focused
+          foreground: *background
+          deco: {stack: [background: {color: *color4}]}
+    content:
+      "":
+        map:
+          conditions:
+            state == focused:   {string: {<<: [*default, *focused]}}
+            state == invisible: {string: {<<: *default}}
+
+pipewire: &pipewire
+  pipewire:
+    anchors:
+      volume: &volume
+        conditions:
+          muted: 
+            string:
+              text: " {cubic_volume}%"
+              on-click:
+                left: "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+                wheel-up: "pactl set-sink-volume @DEFAULT_SINK@ +1%"
+                wheel-down: "pactl set-sink-volume @DEFAULT_SINK@ -1%"
+
+          ~muted:
+            string:
+              text: " {cubic_volume}%"
+              on-click:
+                left: "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+                wheel-up: "pactl set-sink-volume @DEFAULT_SINK@ +1%"
+                wheel-down: "pactl set-sink-volume @DEFAULT_SINK@ -1%"
+    content:
+      list:
+        items:
+          - map:
+              conditions:
+                type == "sink":
+                  map:
+                    <<: *volume
+
+battery: &battery
+  battery:
+    name: BAT1
+    poll-interval: 30000
+    content:
+      string:
+        text: " {capacity}%"
+
+clock: &clock
+  clock:
+    time-format: "%H:%M"
+    date-format: "%m/%d"
+    content:
+      - string: {text: " {date}"}
+      - string: {text: " {time}"}
 
 bar:
   height: 40
@@ -9,114 +67,15 @@ bar:
 
   font: IosevkaNerdFont:pixelsize=32:fontfeatures=ss20
 
-  foreground: ffffffff
-  background: 111111cc
-
-  border:
-    width: 1
-    color: 999999cc
-    margin: 5
-    top-margin: 0
+  foreground: *foreground
+  background: *background
 
   left:
-    - alsa:
-         card: hw:PCH
-         mixer: Master
-         content:
-           map:
-             conditions:
-               ~online: {string: {text: , foreground: ff0000ff}}
-               online:
-                 map:
-                   on-click: /bin/sh -c "amixer -q sset Speaker unmute && amixer -q sset Headphone unmute && amixer -q sset Master toggle"
-                   conditions:
-                     muted: {string: {text: 󰝟, foreground: ffffff66, right-margin: 8}}
-                     ~muted:
-                       ramp:
-                         tag: percent
-                         items:
-                           - string: {text: , right-margin: 8}
-                           - string: {text: , right-margin: 8}
-                           - string: {text: , right-margin: 8}
+   - *pipewire
 
   center:
-    - i3:
-        anchors: # Not used (directly) by f00bar; used here to avoid duplication
-          - string: &i3_common {margin: 5, on-click: "swaymsg --quiet workspace {name}"}
-          - string: &default {<<: *i3_common, text:  "{name}"}
-          - focused: &focused
-              deco: {stack: [background: {color: ffa0a04c}]}
-          - invisible: &invisible {foreground: ffffff55}
-          - urgent: &urgent
-              foreground: 000000ff
-              deco: {stack: [background: {color: bc2b3fff}]}
-        content:
-          "":
-            map:
-              conditions:
-                state == focused:   {string: {<<: [*default, *focused]}}
-                state == unfocused: {string: {<<: *default}}
-                state == invisible: {string: {<<: [*default, *invisible]}}
+   - *i3
 
   right:
-   - battery:
-        name: BAT1
-        poll-interval: 30000
-        anchors:
-          discharging: &discharging
-            list:
-              items:
-                - ramp:
-                    tag: capacity
-                    items:
-                      - string: {text: , foreground: ff0000ff}
-                      - string: {text: , foreground: ffa600ff}
-                      - string: {text: ,}
-                      - string: {text: ,}
-                      - string: {text: ,}
-                      - string: {text: ,}
-                      - string: {text: ,}
-                      - string: {text: ,}
-                      - string: {text: ,}
-                      - string: {text: , foreground: 00ff00ff}
-                - string: {text: " {capacity}%", right-margin: 5}
-        content:
-          map:
-            conditions:
-              state == unknown:
-                <<: *discharging
-              state == discharging:
-                <<: *discharging
-              state == charging:
-                - string: {text: , foreground: 00ff00ff}
-                - string: {text: " {capacity}%", right-margin: 5}
-              state == full:
-                - string: {text: , foreground: 00ff00ff}
-                - string: {text: " {capacity}% full", right-margin: 5}
-              state == "not charging":
-                - ramp:
-                    tag: capacity
-                    items:
-                      - string: {text:  , foreground: ff0000ff}
-                      - string: {text:  , foreground: ffa600ff}
-                      - string: {text:  , foreground: 00ff00ff}
-                      - string: {text:  , foreground: 00ff00ff}
-                      - string: {text:  , foreground: 00ff00ff}
-                      - string: {text:  , foreground: 00ff00ff}
-                      - string: {text:  , foreground: 00ff00ff}
-                      - string: {text:  , foreground: 00ff00ff}
-                      - string: {text:  , foreground: 00ff00ff}
-                      - string: {text:  , foreground: 00ff00ff}
-                - string: {text: " {capacity}%", right-margin: 5}
-   - clock:
-        time-format: "%H:%M"
-        date-format: "%m/%d"
-        content:
-          - string: {text: }
-          - string: {text: " {date} {time}", right-margin: 5}
-   - label:
-        content:
-          string:
-            on-click: systemctl poweroff
-            text: 
-            right-margin: 12
+   - *battery
+   - *clock
