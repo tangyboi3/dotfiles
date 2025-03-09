@@ -5,14 +5,18 @@ i3: &i3
       - string: &i3_common {margin: 5, on-click: "swaymsg --quiet workspace {name}"}
       - string: &default {<<: *i3_common, text:  "{name}"}
       - focused: &focused
-          foreground: *background
-          deco: {stack: [background: {color: *color4}]}
+          foreground: *foreground
+          deco:
+            underline: 
+              size: 5
+              color: *color4
+    sort: ascending
     content:
       "":
         map:
           conditions:
             state == focused:   {string: {<<: [*default, *focused]}}
-            state == invisible: {string: {<<: *default}}
+            state != focused: {string: {<<: *default}}
 
 pipewire: &pipewire
   pipewire:
@@ -21,15 +25,11 @@ pipewire: &pipewire
         conditions:
           muted: 
             string:
-              text: " {cubic_volume}%"
-              on-click:
-                left: "pactl set-sink-mute @DEFAULT_SINK@ toggle"
-                wheel-up: "pactl set-sink-volume @DEFAULT_SINK@ +1%"
-                wheel-down: "pactl set-sink-volume @DEFAULT_SINK@ -1%"
-
+              text: "[vol: mute]"
+              on-click: "pactl set-sink-mute @DEFAULT_SINK@ toggle"
           ~muted:
             string:
-              text: " {cubic_volume}%"
+              text: "[vol: {cubic_volume}%]"
               on-click:
                 left: "pactl set-sink-mute @DEFAULT_SINK@ toggle"
                 wheel-up: "pactl set-sink-volume @DEFAULT_SINK@ +1%"
@@ -42,6 +42,7 @@ pipewire: &pipewire
                 type == "sink":
                   map:
                     <<: *volume
+                    foreground: *color2
 
 battery: &battery
   battery:
@@ -49,15 +50,15 @@ battery: &battery
     poll-interval: 30000
     content:
       string:
-        text: " {capacity}%"
+        text: "[bat: {capacity}%]"
+        foreground: *color5
 
 clock: &clock
   clock:
     time-format: "%H:%M"
-    date-format: "%m/%d"
+    date-format: "%a, %b %d"
     content:
-      - string: {text: " {date}"}
-      - string: {text: " {time}"}
+      - string: {text: "{time} {date}"}
 
 bar:
   height: 40
@@ -71,11 +72,11 @@ bar:
   background: *background
 
   left:
-   - *pipewire
-
-  center:
    - *i3
 
-  right:
-   - *battery
+  center:
    - *clock
+
+  right:
+   - *pipewire
+   - *battery

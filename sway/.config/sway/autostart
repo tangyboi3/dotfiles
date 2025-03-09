@@ -1,0 +1,4 @@
+exec {
+    gammastep -P -O 4000
+    wal -R
+}

@@ -1,22 +1,14 @@
-# gaps
 gaps inner 8px 
 gaps outer 4px 
 
-# font
 font pango:IosevkaNerdFont 12 "#ss20"
 
-# pywal
-include $HOME/.cache/wal/colors-sway
+output * bg $wallpaper fill
 
-# wallpaper
-output * bg $wallpaper fill scale 2
-client.focused $color0 $background $foreground $color7 $background
+default_border none
 
-# no titlebar
-default_border pixel 2
-
-# client.class		border		background	text		indicator	child_border
-client.focused		$color12	$color12	$foreground	$foreground	$color12
+#client.class	border	background	text		indicator	child_border
+client.focused	$color7	$background	$foreground	$color7		$color7
 
 # combine config files for yambar
-exec_always sh -c "cat ~/.cache/wal/yambarcolors.yml ~/.config/yambar/config.yml > /tmp/yambarconfig.yml; killall yambar; yambar -c /tmp/yambarconfig.yml &"
+exec_always cat ~/.cache/wal/yambar.yml ~/.config/yambar/config.yml > /tmp/yambar.yml; killall yambar; yambar -c /tmp/yambar.yml &
