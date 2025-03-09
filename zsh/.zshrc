@@ -27,7 +27,3 @@ function y() {
 
 alias ls="ls --color=auto"
 alias grep="grep --color=auto"
-
-if [ -f /usr/share/nnn/quitcd/quitcd.bash_sh_zsh ]; then
-    source /usr/share/nnn/quitcd/quitcd.bash_sh_zsh
-fi

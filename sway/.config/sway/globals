@@ -1,0 +1,13 @@
+set {
+     # mod key
+     $mod Mod1
+
+     # Vim keys
+     $left h
+     $down j
+     $up k
+     $right l
+
+     $term foot
+     $menu fuzzel
+}
