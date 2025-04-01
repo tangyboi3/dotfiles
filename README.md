@@ -2,8 +2,8 @@
 
 ## Dependencies
 ```bash
-sudo pacman -S sway sway-contrib zsh stow foot yazi firefox freecad gammastep ttf-iosevka-nerd ncmpcpp
-sudo paru -S pywal16 pywalfox yambar-wayland
+sudo pacman -S sway swaybg sway-contrib zsh stow foot yazi gammastep ttf-iosevka-nerd ncmpcpp
+sudo paru -S python-pywal16 python-pywalfox yambar-wayland zen-browser-bin
 ```
 ### Firefox
 [pywalfox](https://addons.mozilla.org/en-US/firefox/addon/pywalfox/)
