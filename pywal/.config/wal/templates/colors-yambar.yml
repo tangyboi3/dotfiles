@@ -1,0 +1,16 @@
+foreground: &fg {foreground.strip}ff
+background: &bg {background.strip}ff
+color1: &c1 {color1.strip}ff
+color2: &c2 {color2.strip}ff
+color3: &c3 {color3.strip}ff
+color4: &c4 {color4.strip}ff
+color5: &c5 {color5.strip}ff
+color6: &c6 {color6.strip}ff
+
+bgb: &bgb {{deco: {{background: {{color: *bg}}}}}}
+c1b: &c1b {{deco: {{background: {{color: *c1}}}}, foreground: *bg}}
+c2b: &c2b {{deco: {{background: {{color: *c2}}}}, foreground: *bg}}
+c3b: &c3b {{deco: {{background: {{color: *c3}}}}, foreground: *bg}}
+c4b: &c4b {{deco: {{background: {{color: *c4}}}}, foreground: *bg}}
+c5b: &c5b {{deco: {{background: {{color: *c5}}}}, foreground: *bg}}
+c6b: &c6b {{deco: {{background: {{color: *c6}}}}, foreground: *bg}}

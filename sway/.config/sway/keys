@@ -105,8 +105,8 @@ bindsym {
 
 bindsym --locked {
     XF86AudioMute exec pactl set-sink-mute \@DEFAULT_SINK@ toggle
-    XF86AudioLowerVolume exec pactl set-sink-volume \@DEFAULT_SINK@ -1%
-    XF86AudioRaiseVolume exec sh -c "[ $(pactl get-sink-volume @DEFAULT_SINK@ | awk -F"[ ',;/]+" '/Volume:/{print $4}') != 100% ] && pactl set-sink-volume \@DEFAULT_SINK@ +1%"
+    XF86AudioLowerVolume exec pactl set-sink-volume \@DEFAULT_SINK@ -5%
+    XF86AudioRaiseVolume exec sh -c "[ $(pactl get-sink-volume @DEFAULT_SINK@ | awk -F"[ ',;/]+" '/Volume:/{print $4}') != 100% ] && pactl set-sink-volume \@DEFAULT_SINK@ +5%"
     XF86AudioMicMute exec pactl set-source-mute \@DEFAULT_SOURCE@ toggle
     XF86MonBrightnessDown exec brightnessctl set 5%-
     XF86MonBrightnessUp exec brightnessctl set 5%+
