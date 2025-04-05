@@ -1,5 +1,11 @@
+# Color anchors are defined in ~/.config/wal/templates/yambar.yml
 trans: &trans 00000000
 
+# Fonts
+ios: &ios Iosevka:pixelsize=20:fontfeatures=ss20:style=bold
+icons: &icons Font Awesome 6 free:style=solid:pixelsize=20
+
+# Modules
 i3: &i3
   i3:
     anchors:
@@ -113,18 +119,87 @@ bar:
     #top-width: 5
 
   font: IosevkaNerdFont:pixelsize=16:fontfeatures=ss20
+=======
+  sort: ascending
+  anchors:
+    - string: &default {text:  "{name}", margin: 5, on-click: "swaymsg --quiet workspace {name}"}
+    - focused: &focused {foreground: *bg, <<: *c2b}
+  content:
+    "":
+      map:
+        default: {string: {margin: 8, <<: [*default, *bgb]}}
+        conditions:
+          state == focused: {string: {margin: 8, <<: [*default, *focused]}}
 
-  foreground: *foreground
-  background: *background
+# album artist?
+mpd: &mpd
+  host: /run/mpd/socket
+  content:
+    string: {text: "artist - title (album)", margin: 8, <<: *bgb}
+
+pipewire: &pipewire
+  anchors:
+    vol: &vol
+      <<: *bgb
+      on-click:
+        left: "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+        wheel-up: "pactl set-sink-volume @DEFAULT_SINK@ +5%"
+        wheel-down: "pactl set-sink-volume @DEFAULT_SINK@ -5%"
+  content:
+    map:
+      conditions:
+        type == "sink" && muted: {string: {text: "", margin: 8, <<: *bgb, font: *icons, on-click: "pactl set-sink-mute @DEFAULT_SINK@ toggle"}}
+        type == "sink" && ~muted:
+          list:
+            spacing: 0
+            items:
+              - ramp:
+                  tag: cubic_volume
+                  items:
+                    - string: {text: "", font: *icons, left-margin: 8, <<: *vol}
+                    - string: {text: "", font: *icons, left-margin: 8, <<: *vol}
+                    - string: {text: "", font: *icons, left-margin: 8, <<: *vol}
+              - string: {text: "{cubic_volume}", left-margin: 4, right-margin: 8, <<: *vol}
+
+network: &network
+  content:
+    map:
+      conditions:
+        state == up && carrier && name >= wl:
+          string: {text: " {ssid} {dl-speed:mb:.1}{ul-speed:mb:.1}", margin: 8, <<: *bgb}
+        state == up && carrier && name <= en:
+          string: {text: " {name} {dl-speed:mb:.1}{ul-speed:mb:.1}", margin: 8, <<: *bgb}
+
+battery: &battery
+  name: BAT1
+  poll-interval: 30000
+  content:
+    map:
+      conditions:
+        capacity != 0: {string: {text: "󰁹 {capacity}%", margin: 8, <<: *bgb}}
+
+clock: &clock
+  foreground: *bg
+  time-format: "%H:%M"
+  date-format: "%a, %b %d"
+  content:
+    string: {text: "{time} | {date}", margin: 8, <<: *c2b}
+
+bar:
+  monitor: DP-1 # How's this gonna work with a laptop?
+  height: 32
+  location: top
+
+  font: *ios
+
+  foreground: *c2
+  background: *trans
 
   left:
-   - *i3
-   - *mpd
-
-  center:
-   - *clock
+    - i3: *i3
 
   right:
-   - *network
-   - *pipewire
-   - *battery
+    - network: *network
+    - pipewire: *pipewire
+    - battery: *battery
+    - clock: *clock

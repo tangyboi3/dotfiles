@@ -4,5 +4,5 @@ exec {
 }
 
 exec_always {
-    cat ~/.cache/wal/yambar.yml ~/.config/yambar/config.yml > /tmp/yambar.yml; killall yambar; yambar -c /tmp/yambar.yml &
+    cat ~/.cache/wal/colors-yambar.yml ~/.config/yambar/config.yml > /tmp/yambar.yml; killall yambar; yambar -c /tmp/yambar.yml &
 }
