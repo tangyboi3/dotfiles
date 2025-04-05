@@ -27,3 +27,5 @@ function y() {
 
 alias ls="ls --color=auto"
 alias grep="grep --color=auto"
+alias logout="loginctl terminate-user tangy"
+alias yambar="cat ~/.cache/wal/yambar.yml ~/.config/yambar/config.yml > /tmp/yambar.yml; yambar -c /tmp/yambar.yml &"
