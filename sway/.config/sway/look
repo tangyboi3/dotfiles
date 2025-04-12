@@ -1,14 +1,13 @@
 gaps inner 8px 
 gaps outer 4px 
 
-font pango:IosevkaNerdFont 12 "#ss20"
+font pango:Iosevka 12 "#ss20"
 
+output DP-1 bg $wallpaper fill
 output * bg $wallpaper fill
 
-default_border none
+default_border pixel 1
 
-#client.class	border	background	text		indicator	child_border
-client.focused	$color7	$background	$foreground	$color7		$color7
-
-# combine config files for yambar
-exec_always cat ~/.cache/wal/yambar.yml ~/.config/yambar/config.yml > /tmp/yambar.yml; killall yambar; yambar -c /tmp/yambar.yml &
+#client.class		border		background	text		indicator	child_border
+client.focused		$color4		$background	$foreground	$color4		$color4
+client.unfocused	$background	$background	$foreground	$background	$background
