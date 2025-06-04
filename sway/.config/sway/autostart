@@ -1,8 +1,11 @@
 exec {
     gammastep -P -O 4000
     wal -R
+    swaync
+    udiskie &
 }
 
 exec_always {
     cat ~/.cache/wal/colors-yambar.yml ~/.config/yambar/config.yml > /tmp/yambar.yml; killall yambar; yambar -c /tmp/yambar.yml &
+    autotiling
 }

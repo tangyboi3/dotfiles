@@ -4,7 +4,7 @@ gaps outer 4px
 font pango:Iosevka 12 "#ss20"
 
 output DP-1 bg $wallpaper fill
-output * bg $wallpaper fill
+output HDMI-A-1 bg $wallpaper fill position -1920,0
 
 default_border pixel 1
 
