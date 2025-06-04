@@ -1,125 +1,6 @@
-# Color anchors are defined in ~/.config/wal/templates/yambar.yml
 trans: &trans 00000000
 
-# Fonts
-ios: &ios Iosevka:pixelsize=20:fontfeatures=ss20:style=bold
-icons: &icons Font Awesome 6 free:style=solid:pixelsize=20
-
-# Modules
 i3: &i3
-  i3:
-    anchors:
-      - string: &default {margin: 5, on-click: "swaymsg --quiet workspace {name}", text:  "{name}"}
-      - focused: &focused
-          foreground: *background
-          deco:
-            background: 
-              color: *color4
-      - unfocused: &unfocused
-          foreground: *color4
-          deco:
-            background: 
-              color: *background
-    sort: ascending
-    content:
-      "":
-        map:
-          conditions:
-            state == focused: {string: {<<: [*default, *focused], margin: 8}}
-            state != focused: {string: {<<: [*default, *unfocused], margin: 8}}
-
-mpd: &mpd
-  mpd:
-    foreground: *color6
-    host: /run/mpd/socket
-    content:
-      map:
-        conditions:
-          state != offline:
-            string:
-              text: "{artist} - {title} ({album})"
-              deco:
-                background:
-                  color: *background
-
-pipewire: &pipewire
-  pipewire:
-    foreground: *color2
-    content:
-      map:
-        conditions:
-          type == "sink" && muted:
-            string:
-              margin: 4
-              text: "[volume: mute]"
-              on-click: "pactl set-sink-mute @DEFAULT_SINK@ toggle"
-              deco:
-                background:
-                  color: *background
-          type == "sink" && ~muted:
-            string:
-              margin: 4
-              text: "[volume: {cubic_volume}%]"
-              on-click:
-                left: "pactl set-sink-mute @DEFAULT_SINK@ toggle"
-                wheel-up: "pactl set-sink-volume @DEFAULT_SINK@ +1%"
-                wheel-down: "pactl set-sink-volume @DEFAULT_SINK@ -1%"
-              deco:
-                background:
-                  color: *background
-
-network: &network
-  network:
-    foreground: *color3
-    content:
-      map:
-        conditions:
-          state == up && carrier:
-            string:
-              margin: 4
-              text: "[{ssid}: {quality}%]"
-              deco:
-                background:
-                  color: *background
-
-battery: &battery
-  battery:
-    foreground: *color1
-    name: BAT1
-    poll-interval: 30000
-    content:
-      map:
-        conditions:
-          capacity != 0:
-            string:
-              margin: 4
-              text: "[battery: {capacity}%]"
-              deco:
-                background:
-                  color: *background
-
-clock: &clock
-  clock:
-    foreground: *foreground
-    time-format: "%H:%M"
-    date-format: "%a, %b %d"
-    content:
-      string: 
-        margin: 4
-        text: "{time} | {date}"
-        deco:
-          background:
-            color: *background
-
-bar:
-  height: 28
-  location: top
-  #right-margin: 4
-  #border:
-    #top-width: 5
-
-  font: IosevkaNerdFont:pixelsize=16:fontfeatures=ss20
-=======
   sort: ascending
   anchors:
     - string: &default {text:  "{name}", margin: 5, on-click: "swaymsg --quiet workspace {name}"}
@@ -130,6 +11,14 @@ bar:
         default: {string: {margin: 8, <<: [*default, *bgb]}}
         conditions:
           state == focused: {string: {margin: 8, <<: [*default, *focused]}}
+
+udiskie: &udiskie
+  content:
+    string:
+      <<: *bgb
+      text: ""
+      margin: 8
+      on-click: "udiskie-dmenu --dmenu" 
 
 # album artist?
 mpd: &mpd
