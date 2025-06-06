@@ -1,5 +1,11 @@
+# Color anchors are defined in ../wal/templates/colors-yambar.yml
 trans: &trans 00000000
 
+# Fonts
+ios: &ios Iosevka:pixelsize=20:fontfeatures=ss20:style=bold
+icons: &icons Font Awesome 6 free:style=solid:pixelsize=20
+
+# Modules
 i3: &i3
   sort: ascending
   anchors:
@@ -55,7 +61,7 @@ network: &network
     map:
       conditions:
         state == up && carrier && name >= wl:
-          string: {text: " {ssid} {dl-speed:mb:.1}{ul-speed:mb:.1}", margin: 8, <<: *bgb}
+          string: {text: " {ssid}", margin: 8, <<: *bgb}
         state == up && carrier && name <= en:
           string: {text: " {name} {dl-speed:mb:.1}{ul-speed:mb:.1}", margin: 8, <<: *bgb}
 
@@ -90,5 +96,6 @@ bar:
   right:
     - network: *network
     - pipewire: *pipewire
+    - label: *udiskie
     - battery: *battery
     - clock: *clock
