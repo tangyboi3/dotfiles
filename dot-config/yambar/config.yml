@@ -18,14 +18,6 @@ i3: &i3
         conditions:
           state == focused: {string: {margin: 8, <<: [*default, *focused]}}
 
-udiskie: &udiskie
-  content:
-    string:
-      <<: *bgb
-      text: ""
-      margin: 8
-      on-click: "udiskie-dmenu --dmenu" 
-
 # album artist?
 mpd: &mpd
   host: /run/mpd/socket
@@ -62,8 +54,8 @@ network: &network
       conditions:
         state == up && carrier && name >= wl:
           string: {text: " {ssid}", margin: 8, <<: *bgb}
-        state == up && carrier && name <= en:
-          string: {text: " {name} {dl-speed:mb:.1}{ul-speed:mb:.1}", margin: 8, <<: *bgb}
+        state == up && carrier && name <= em:
+          string: {text: " {name}", margin: 8, <<: *bgb}
 
 battery: &battery
   name: BAT1
@@ -96,6 +88,6 @@ bar:
   right:
     - network: *network
     - pipewire: *pipewire
-    - label: *udiskie
     - battery: *battery
     - clock: *clock
+    - label: *power

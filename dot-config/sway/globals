@@ -1,6 +1,6 @@
 set {
      # mod key
-     $mod Mod1
+     $mod Mod4
 
      # Vim keys
      $left h
