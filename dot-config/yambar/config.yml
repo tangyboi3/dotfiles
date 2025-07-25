@@ -18,6 +18,10 @@ i3: &i3
         conditions:
           state == focused: {string: {margin: 8, <<: [*default, *focused]}}
 
+power: &power
+  content:
+    string: {text: "", margin: 8, <<: *bgb, font: *icons, on-click: "~/.local/bin/fuzzel/power.sh"}
+
 # album artist?
 mpd: &mpd
   host: /run/mpd/socket
