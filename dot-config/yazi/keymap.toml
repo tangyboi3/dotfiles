@@ -2,3 +2,7 @@
 on   = "!"
 run  = 'shell "$SHELL" --block'
 desc = "Open shell here"
+
+[[mgr.prepend_keymap]]
+on  = "m"
+run = "plugin mount"

@@ -1,6 +1,7 @@
 export EDITOR=nvim
 export XDG_CURRENT_DESKTOP=sway
 export UDISKIE_DMENU_LAUNCHER=fuzzel
+export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh-agent.socket
 
 typeset -U path PATH
 path=(~/.local/bin ~/.local/bin/scripts /usr/share/sway-contrib . $path)

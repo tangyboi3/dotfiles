@@ -83,9 +83,6 @@ bindsym {
     # Swap focus between the tiling area and the floating area
     $mod+space focus mode_toggle
 
-    # Move focus to the parent container
-    $mod+a focus parent
-
     # Sway has a "scratchpad", which is a bag of holding for windows.
     # You can send windows there and get them back later.
 
