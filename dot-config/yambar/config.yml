@@ -1,22 +1,21 @@
 # Color anchors are defined in ../wal/templates/colors-yambar.yml
-trans: &trans 00000000
+trans: &trans 00000055
+
+# Decorations
+fgb: &fgb {deco: {background: {color: *fg}}, foreground: *bg}
+bgb: &bgb {deco: {background: {color: *bg}}}
+c1b: &c1b {deco: {background: {color: *c1}}, foreground: *bg}
+c2b: &c2b {deco: {background: {color: *c2}}, foreground: *bg}
+c3b: &c3b {deco: {background: {color: *c3}}, foreground: *bg}
+c4b: &c4b {deco: {background: {color: *c4}}, foreground: *bg}
+c5b: &c5b {deco: {background: {color: *c5}}, foreground: *bg}
+c6b: &c6b {deco: {background: {color: *c6}}, foreground: *bg}
 
 # Fonts
-ios: &ios Iosevka:pixelsize=20:fontfeatures=ss20:style=bold
-icons: &icons Font Awesome 6 free:style=solid:pixelsize=20
+ios: &ios Iosevka:size=16:fontfeatures=ss20:style=bold
+icons: &icons Symbols Nerd Font:size=16
 
 # Modules
-i3: &i3
-  sort: ascending
-  anchors:
-    - string: &default {text:  "{name}", margin: 5, on-click: "swaymsg --quiet workspace {name}"}
-    - focused: &focused {foreground: *bg, <<: *c2b}
-  content:
-    "":
-      map:
-        default: {string: {margin: 8, <<: [*default, *bgb]}}
-        conditions:
-          state == focused: {string: {margin: 8, <<: [*default, *focused]}}
 
 # album artist?
 mpd: &mpd
@@ -30,12 +29,17 @@ pipewire: &pipewire
       <<: *bgb
       on-click:
         left: "pactl set-sink-mute @DEFAULT_SINK@ toggle"
-        wheel-up: "pactl set-sink-volume @DEFAULT_SINK@ +5%"
+        wheel-up: "[[ $(pactl get-sink-volume @DEFAULT_SINK@ | awk -F'[ /]+' '{ print $4 }' | tr -d '%') -lt 100 ]] && pactl set-sink-volume @DEFAULT_SINK@ +5%"
         wheel-down: "pactl set-sink-volume @DEFAULT_SINK@ -5%"
   content:
     map:
       conditions:
-        type == "sink" && muted: {string: {text: "", margin: 8, <<: *bgb, font: *icons, on-click: "pactl set-sink-mute @DEFAULT_SINK@ toggle"}}
+        type == "sink" && muted:
+          list:
+            spacing: 0
+            items:
+              - string: {text: "", left-margin: 8, font: *icons, <<: *vol}
+              - string: {text: "MUTED", left-margin: 4, right-margin: 8, <<: *vol}
         type == "sink" && ~muted:
           list:
             spacing: 0
@@ -46,16 +50,21 @@ pipewire: &pipewire
                     - string: {text: "", font: *icons, left-margin: 8, <<: *vol}
                     - string: {text: "", font: *icons, left-margin: 8, <<: *vol}
                     - string: {text: "", font: *icons, left-margin: 8, <<: *vol}
-              - string: {text: "{cubic_volume}", left-margin: 4, right-margin: 8, <<: *vol}
+              - string: {text: "{cubic_volume}%", left-margin: 4, right-margin: 8, <<: *vol}
 
 network: &network
+  poll-interval: 1000
   content:
     map:
       conditions:
-        state == up && carrier && name >= wl:
-          string: {text: " {ssid}", margin: 8, <<: *bgb}
-        state == up && carrier && name <= em:
-          string: {text: " {name}", margin: 8, <<: *bgb}
+        name > wl:
+          list:
+            spacing: 0
+            items:
+              - string: {text: "", left-margin: 8, font: *icons, <<: *bgb, on-click: "fuzzel-iwd top-right"}
+              - string: {text: "{signal}dBm", left-margin: 4, right-margin: 8, <<: *bgb, on-click: "fuzzel-iwd top-right"}
+        carrier && name < em:
+          string: {text: "", margin: 8, <<: *bgb}
 
 battery: &battery
   name: BAT1
@@ -72,22 +81,36 @@ clock: &clock
   content:
     string: {text: "{time} | {date}", margin: 8, <<: *c2b}
 
+i3: &i3
+  sort: ascending
+  anchors:
+    - string: &default {text:  "{name}", margin: 6, on-click: "swaymsg --quiet workspace {name}"}
+    - focused: &focused {foreground: *bg, <<: *c2b}
+  content:
+    "":
+      map:
+        default: {string: {<<: [*default, *bgb]}}
+        conditions:
+          state == focused: {string: {<<: [*default, *focused]}}
+
 bar:
   monitor: DP-1 # How's this gonna work with a laptop?
-  height: 32
+  height: 24
   location: top
 
   font: *ios
 
   foreground: *c2
-  background: *trans
+  background: *bg
 
   left:
     - i3: *i3
 
   right:
-    - network: *network
+    - script: *stats
     - pipewire: *pipewire
     - battery: *battery
+    - network: *network
+    - label: *wall
     - clock: *clock
     - label: *power

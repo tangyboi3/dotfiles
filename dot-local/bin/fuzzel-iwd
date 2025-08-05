@@ -1,0 +1,50 @@
+#!/bin/sh
+
+iwctl station wlan0 scan
+
+anchor=$([ $# != 0 ] && echo -a "$1")
+conn=$(iwctl station wlan0 show | grep 'Connected ' | sed 's/.*Connected network *//')
+# remove colorcodes and replace 2+ spaces with tabs
+scan=$(iwctl station wlan0 get-networks rssi-dbms | tail -n +5 | sed -E 's/\x1B\[[0-9;]*[JKmsu]//g; s/\s{2,}/\t/g; s/^\s//')
+# sort by dBm
+ssids=$(echo "$conn"; echo "$scan" | awk -F'\t' '$1 !~ />/ { print $3"\t"$1 }' | sort | cut -f 2-)
+
+pickssid () {
+	ssidpick=$(echo "$ssids" | fuzzel --dmenu $anchor --placeholder "$conn" -l "$(echo "$ssids" | wc -l)")
+	if [ -z "$ssidpick" ]; then
+		exit 1
+	elif [ "$ssidpick" = "$conn" ]; then
+		actions="Disconnect\nForget\nBack\n"
+	elif [ "$(iwctl known-networks list | grep -c "$ssidpick")" -ge 1 ]; then
+		actions="Connect\nForget\nBack\n"
+	else
+		actions="Password\nBack\n"
+	fi
+}
+
+pickaction () {
+	actionpick=$(printf '%s' $actions | fuzzel --dmenu $anchor --placeholder "$ssidpick" -l "$(printf '%s' $actions | wc -l)")
+	case $actionpick in
+		*"Connect")
+			iwctl station wlan0 connect "$ssidpick";;
+		*"Disconnect")
+			iwctl station wlan0 disconnect;;
+		*"Forget")
+			iwctl known-networks "$ssidpick" forget;;
+		*"Password")
+			sec=$(echo "$scan" | grep "$ssidpick" | cut -f 2)
+			if [ "$sec" = "open" ]; then
+				iwctl station wlan0 connect "$ssidpick"
+			else
+				pass=$(echo Back | fuzzel --dmenu $anchor --password -l 1)
+				[ "$pass" = "Back" ] && pickaction
+				iwctl --passphrase "$pass" station wlan0 connect "$ssidpick"
+			fi;;
+		*"Back")
+			pickssid && pickaction;;
+		"")
+			exit 1;;
+	esac
+}
+
+pickssid && pickaction

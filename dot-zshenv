@@ -4,6 +4,6 @@ export UDISKIE_DMENU_LAUNCHER=fuzzel
 export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh-agent.socket
 
 typeset -U path PATH
-path=(~/.local/bin ~/.local/bin/scripts /usr/share/sway-contrib . $path)
+path=(~/.local/bin/ /usr/share/sway-contrib . $path)
 export PATH
 
