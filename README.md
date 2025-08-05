@@ -13,5 +13,6 @@ sudo paru -S python-pywal16 python-pywalfox yambar-wayland zen-browser-bin
 git clone https://codeberg.org/tangy/dotfiles
 cd dotfiles
 stow . --dotfiles -t ~
+chmod +x ~/.local/bin/*
 wal -i ~/.local/share/wallpapers/
 ```

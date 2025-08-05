@@ -1,0 +1,4 @@
+#!/bin/sh
+
+cat ~/.cache/wal/colors-yambar.yml ~/.config/yambar/config.yml > ~/.cache/yambar-wal.yml
+yambar -c ~/.cache/yambar-wal.yml

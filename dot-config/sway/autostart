@@ -5,6 +5,6 @@ exec {
 }
 
 exec_always {
-    killall yambar; cat ~/.cache/wal/colors-yambar.yml ~/.config/yambar/config.yml > /tmp/yambar.yml; yambar -c /tmp/yambar.yml
+    killall yambar; yambar-wal
     autotiling
 }
