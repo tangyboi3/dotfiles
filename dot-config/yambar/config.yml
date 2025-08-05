@@ -16,6 +16,19 @@ ios: &ios Iosevka:size=16:fontfeatures=ss20:style=bold
 icons: &icons Symbols Nerd Font:size=16
 
 # Modules
+stats: &stats
+  poll-interval: 1000
+  content:
+    list:
+      spacing: 0
+      items:
+        - string: {text: "", left-margin: 8, font: *icons, <<: *bgb}
+        - string: {text: "{cpu}%", left-margin: 4, right-margin: 8, <<: *bgb}
+        - string: {text: "", left-margin: 8, font: *icons, <<: *bgb}
+        - string: {text: "{mem}%", left-margin: 4, right-margin: 8, <<: *bgb}
+        # - string: {text: "{disk}%", left-margin: 8, <<: *bgb}
+  path: "~/.local/bin/yambar-stats"
+
 wall: &wall
   content:
     string: {text: "󰸉", margin: 8, <<: *c1b, font: *icons, on-click: "fuzzel-wall top-right"}

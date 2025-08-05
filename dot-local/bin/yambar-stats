@@ -1,0 +1,13 @@
+#!/bin/bash
+
+cpu=$(vmstat | awk '/[0-9]/ { print $13 }')
+mem=$(free | awk '/Mem/ { print int($3/$2*10+.5) }')
+disk=$(df | awk '/^\/dev/ { print $5; exit }' | tr -d "%")
+
+# while : ; do
+	echo "cpu|range:0-100|$cpu"
+	echo "mem|range:0-100|$mem"
+	echo "disk|range:0-100|$disk"
+	echo
+	# sleep 10
+# done
