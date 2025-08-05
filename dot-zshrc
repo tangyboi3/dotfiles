@@ -29,7 +29,6 @@ alias ls="ls --color=auto"
 alias grep="grep --color=auto"
 alias logout="loginctl terminate-user tangy"
 alias yambar="yambar-wal"
-alias ssh-keys="ssh-add ~/.ssh/id_ed25519_github ~/.ssh/id_ed25519_codeberg" #eval $(ssh-agent)
 
 ## [Completion]
 ## Completion scripts setup. Remove the following line to uninstall
