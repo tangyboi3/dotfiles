@@ -9,5 +9,5 @@ output HDMI-A-1 bg $wallpaper fill position -1920,0
 default_border pixel 1
 
 #client.class		border		background	text		indicator	child_border
-client.focused		$color4		$background	$foreground	$color4		$color4
+client.focused		$color2		$background	$foreground	$color2		$color2
 client.unfocused	$background	$background	$foreground	$background	$background
