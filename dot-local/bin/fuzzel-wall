@@ -1,0 +1,11 @@
+#!/bin/sh
+
+anchor=$([ $# != 0 ] && echo -a "$1")
+dir="$HOME/.local/share/wallpapers"
+
+img=$(ls "$dir" | fuzzel --dmenu $anchor -l $(ls "$dir" | wc -l))
+[ -z "$img" ] && exit 1
+back=$(printf "colorz\nfast_colorthief\nhaishoku\nwal" | fuzzel --dmenu $anchor -l 4)
+[ -z "$back" ] && exit 1
+
+wal -q -i "$dir"/"$img" --backend "$back"
