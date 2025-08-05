@@ -16,6 +16,9 @@ ios: &ios Iosevka:size=16:fontfeatures=ss20:style=bold
 icons: &icons Symbols Nerd Font:size=16
 
 # Modules
+power: &power
+  content:
+    string: {text: "", margin: 8, <<: *fgb, font: *icons, on-click: "fuzzel-power top-right"}
 
 # album artist?
 mpd: &mpd
