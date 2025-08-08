@@ -47,7 +47,7 @@ pipewire: &pipewire
         <<: *bgb
         on-click:
           left: "pactl set-sink-mute @DEFAULT_SINK@ toggle"
-          wheel-up: "[[ $(pactl get-sink-volume @DEFAULT_SINK@ | awk -F'[ /]+' '{ print $4 }' | tr -d '%') -lt 100 ]] && pactl set-sink-volume @DEFAULT_SINK@ +5%"
+          wheel-up: "pactl set-sink-volume @DEFAULT_SINK@ +5%"
           wheel-down: "pactl set-sink-volume @DEFAULT_SINK@ -5%"
     content:
       map:
