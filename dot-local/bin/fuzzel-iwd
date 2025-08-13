@@ -23,7 +23,7 @@ pickssid () {
 }
 
 pickaction () {
-	actionpick=$(printf '%s' $actions | fuzzel --dmenu $anchor --placeholder "$ssidpick" -l "$(printf '%s' $actions | wc -l)")
+	actionpick=$(printf '%b' $actions | fuzzel --dmenu $anchor --placeholder "$ssidpick" -l "$(printf '%b' $actions | wc -l)")
 	case $actionpick in
 		*"Connect")
 			iwctl station wlan0 connect "$ssidpick";;
