@@ -7,5 +7,14 @@ img=$(ls "$dir" | fuzzel --dmenu $anchor -l $(ls "$dir" | wc -l))
 [ -z "$img" ] && exit 1
 back=$(printf "colorz\nfast_colorthief\nhaishoku\nwal" | fuzzel --dmenu $anchor -l 4)
 [ -z "$back" ] && exit 1
+cols16=$(printf "only 8\nlight 16\ndark 16" | fuzzel --dmenu $anchor -l 3)
+[ -z "$cols16" ] && exit 1
 
-wal -q -i "$dir"/"$img" --backend "$back"
+case $cols16 in
+  "only"*)
+    wal -q -i "$dir"/"$img" --backend "$back";;
+  "light"*)
+    wal -q -i "$dir"/"$img" --backend "$back" --cols16 lighten;;
+  "dark"*)
+    wal -q -i "$dir"/"$img" --backend "$back" --cols16 darken;;
+esac
