@@ -1,8 +1,8 @@
 #!/bin/sh
 
 anchor=$([ $# != 0 ] && echo -a $1)
-echo $anchor
 pick=$(printf "󰍃 Logout\n󰤄 Sleep\n Restart\n Shutdown" | fuzzel --dmenu $anchor -w 15 -l 4)
+[ -z $pick ] && exit 1
 
 case $pick in
 	*"Logout")
