@@ -4,12 +4,22 @@ trans: &trans 00000055
 # Decorations
 fgb: &fgb {deco: {background: {color: *fg}}, foreground: *bg}
 bgb: &bgb {deco: {background: {color: *bg}}}
+c0b: &c0b {deco: {background: {color: *c0}}, foreground: *bg}
 c1b: &c1b {deco: {background: {color: *c1}}, foreground: *bg}
 c2b: &c2b {deco: {background: {color: *c2}}, foreground: *bg}
 c3b: &c3b {deco: {background: {color: *c3}}, foreground: *bg}
 c4b: &c4b {deco: {background: {color: *c4}}, foreground: *bg}
 c5b: &c5b {deco: {background: {color: *c5}}, foreground: *bg}
 c6b: &c6b {deco: {background: {color: *c6}}, foreground: *bg}
+c7b: &c7b {deco: {background: {color: *c7}}, foreground: *bg}
+c8b: &c8b {deco: {background: {color: *c8}}, foreground: *bg}
+c9b: &c9b {deco: {background: {color: *c9}}, foreground: *bg}
+c10b: &c10b {deco: {background: {color: *c10}}, foreground: *bg}
+c11b: &c11b {deco: {background: {color: *c11}}, foreground: *bg}
+c12b: &c12b {deco: {background: {color: *c12}}, foreground: *bg}
+c13b: &c13b {deco: {background: {color: *c13}}, foreground: *bg}
+c14b: &c14b {deco: {background: {color: *c14}}, foreground: *bg}
+c15b: &c15b {deco: {background: {color: *c15}}, foreground: *bg}
 
 # Fonts
 ios: &ios Iosevka:size=16:fontfeatures=ss20:style=bold
