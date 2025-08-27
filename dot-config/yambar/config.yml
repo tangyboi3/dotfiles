@@ -36,7 +36,7 @@ stats: &stats
           - string: {text: "", left-margin: 8, font: *icons, <<: *bgb}
           - string: {text: "{cpu}%", left-margin: 4, right-margin: 8, <<: *bgb}
           - string: {text: "", left-margin: 8, font: *icons, <<: *bgb}
-          - string: {text: "{mem}%", left-margin: 4, right-margin: 8, <<: *bgb}
+          - string: {text: "{memgb}GB", left-margin: 4, right-margin: 8, <<: *bgb}
           # - string: {text: "{disk}%", left-margin: 8, <<: *bgb}
     path: "~/.local/bin/yambar-stats"
 
