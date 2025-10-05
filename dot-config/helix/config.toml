@@ -1,5 +1,13 @@
 theme = "base16_transparent"
 
+[editor]
+line-number = "relative"
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "underline"
+select = "underline"
+
 [keys.normal.space]
 e = [
   ":sh rm -f /tmp/unique-file-h21a434",
