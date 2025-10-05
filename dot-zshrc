@@ -35,3 +35,5 @@ alias yambar="yambar-wal"
 [[ -f /home/tangy/.dart-cli-completion/zsh-config.zsh ]] && . /home/tangy/.dart-cli-completion/zsh-config.zsh || true
 ## [/Completion]
 
+
+[ -f "/home/tangy/.ghcup/env" ] && . "/home/tangy/.ghcup/env" # ghcup-env
