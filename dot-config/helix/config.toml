@@ -8,6 +8,12 @@ insert = "bar"
 normal = "underline"
 select = "underline"
 
+[editor.soft-wrap]
+enable = true
+
+[keys.normal]
+"ret" = ":w"
+
 [keys.normal.space]
 e = [
   ":sh rm -f /tmp/unique-file-h21a434",
