@@ -17,7 +17,7 @@ pickssid () {
 		pickssid
 	elif [ "$ssidpick" = "$conn" ]; then
 		actions="Disconnect\nForget\nBack\n"
-	elif [ "$(iwctl known-networks list | grep -c "$ssidpick")" -ge 1 ]; then
+	elif [ "$(iwctl known-networks list | grep -wc "$ssidpick")" -ge 1 ]; then
 		actions="Connect\nForget\nBack\n"
 	else
 		actions="Passphrase\nBack\n"
