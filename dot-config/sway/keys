@@ -91,6 +91,7 @@ bindsym {
     $mod+r mode "resize"
 
     $mod+p exec grimshot --notify save anything
+    $mod+w exec fuzzel-iwd top-right
     XF86PowerOff exec fuzzel-power
 }
 
