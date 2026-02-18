@@ -1,0 +1,4 @@
+#!/bin/sh
+
+echo "updates|int|$(checkupdates | wc -l)"
+echo ""

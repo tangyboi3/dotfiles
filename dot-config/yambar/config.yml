@@ -26,8 +26,21 @@ ios: &ios Iosevka:size=16:fontfeatures=ss20:style=bold
 icons: &icons Symbols Nerd Font:size=16
 
 # Modules
+
+updates: &updates
+  script:
+    path: "~/.local/bin/yambar-updates"
+    poll-interval: 3600000
+    content:
+      list:
+        spacing: 0
+        items:
+          - string: {text: "󰮯", left-margin: 8, font: *icons, <<: *bgb}
+          - string: {text: "{updates} available", left-margin: 4, right-margin: 8, <<: *bgb}
+
 stats: &stats
   script:
+    path: "~/.local/bin/yambar-stats"
     poll-interval: 1000
     content:
       list:
@@ -38,12 +51,11 @@ stats: &stats
           - string: {text: "", left-margin: 8, font: *icons, <<: *bgb}
           - string: {text: "{memgb}GB", left-margin: 4, right-margin: 8, <<: *bgb}
           # - string: {text: "{disk}%", left-margin: 8, <<: *bgb}
-    path: "~/.local/bin/yambar-stats"
 
 wall: &wall
   label:
     content:
-      string: {text: "󰸉", margin: 8, <<: *c1b, font: *icons, on-click: "fuzzel-wall top-right"}
+      string: {text: "󰸉", margin: 8, <<: *c1b, font: *icons, on-click: "fuzzel-wall top-left"}
 
 power: &power
   label:
@@ -116,7 +128,7 @@ i3: &i3
   i3:
     sort: ascending
     anchors:
-      - string: &default {text:  "{name}", margin: 6, on-click: "swaymsg --quiet workspace {name}"}
+      - string: &default {text:  "{name}", margin: 8, on-click: "swaymsg --quiet workspace {name}"}
       - focused: &focused {foreground: *bg, <<: *c2b}
     content:
       "":
@@ -136,13 +148,14 @@ bar:
   background: *bg
 
   left:
+    - *wall
     - *i3
 
   right:
+    - *updates
     - *stats
     - *pipewire
     - *battery
     - *network
-    - *wall
     - *clock
     - *power
