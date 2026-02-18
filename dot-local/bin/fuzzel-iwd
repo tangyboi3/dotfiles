@@ -1,6 +1,7 @@
 #!/bin/sh
 
 anchor=$([ $# != 0 ] && echo -a "$1")
+yn=$(echo "Yes"; echo "No")
 
 pickssid () {
 	iwctl station wlan0 scan
@@ -32,7 +33,12 @@ pickaction () {
 		*"Disconnect")
 			iwctl station wlan0 disconnect;;
 		*"Forget")
-			iwctl known-networks "$ssidpick" forget;;
+			confirm=$(echo "$yn" | fuzzel --dmenu $anchor --placeholder "Confirm?" -l 2)
+			if [ "$confirm" = "Yes" ]; then
+				iwctl known-networks "$ssidpick" forget
+			else
+				pickaction
+			fi;;
 		*"Passphrase")
 			sec=$(echo "$scan" | grep "$ssidpick" | cut -f 2)
 			if [ "$sec" = "open" ]; then
