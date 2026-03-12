@@ -98,13 +98,13 @@ network: &network
     content:
       map:
         conditions:
-          name > wl:
+          name > wl && state == "up":
             list:
               spacing: 0
               items:
                 - string: {text: "", left-margin: 8, font: *icons, <<: *bgb, on-click: "fuzzel-iwd top-right"}
                 - string: {text: "{signal}dBm", left-margin: 4, right-margin: 8, <<: *bgb, on-click: "fuzzel-iwd top-right"}
-          carrier && name < em:
+          carrier && name < eo:
             string: {text: "", margin: 8, <<: *bgb}
 
 battery: &battery
