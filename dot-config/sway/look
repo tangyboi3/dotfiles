@@ -1,5 +1,5 @@
-gaps inner 8px 
-gaps outer 4px 
+gaps inner 0px 
+gaps outer 0px 
 
 font pango:Iosevka 12 "#ss20"
 
