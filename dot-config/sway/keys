@@ -80,7 +80,7 @@ bindsym {
     # modes
     $mod+r mode "resize"
 
-    $mod+p exec grimshot --notify save anything
+    $mod+s exec grimshot copy anything
     $mod+w exec fuzzel-iwd center
     $mod+b exec fuzzel-wall center
     $mod+p exec fuzzel-power center
