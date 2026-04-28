@@ -1,0 +1,12 @@
+#!/bin/sh
+
+current=$(pactl get-default-sink)
+sinks=$(pactl list sinks | grep Name | cut -d ' ' -f2 | grep -v -e hdmi)
+next=$(printf '%s' "$sinks" | grep -A1 "$current" | grep -v "$current")
+
+
+if [ -z "$next" ]; then
+  next=$(printf '%s' "$sinks" | head -n1)
+fi
+
+pactl set-default-sink "$next"

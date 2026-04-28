@@ -69,6 +69,7 @@ pipewire: &pipewire
         <<: *bgb
         on-click:
           left: "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+          right: "pulse-switch-sinks"
           wheel-up: "pactl set-sink-volume @DEFAULT_SINK@ +5%"
           wheel-down: "pactl set-sink-volume @DEFAULT_SINK@ -5%"
     content:
@@ -78,18 +79,30 @@ pipewire: &pipewire
             list:
               spacing: 0
               items:
-                - string: {text: "", left-margin: 8, font: *icons, <<: *vol}
+                - map:
+                    conditions:
+                      icon == "audio-speakers":
+                        string: {text: "󰤽", font: *icons, left-margin: 8, <<: *vol}
+                      icon == "audio-card-analog":
+                        string: {text: "󰓃", font: *icons, left-margin: 8, <<: *vol}
+                - string: {text: "", left-margin: 4, font: *icons, <<: *vol}
                 - string: {text: "MUTED", left-margin: 4, right-margin: 8, <<: *vol}
           type == "sink" && ~muted:
             list:
               spacing: 0
               items:
+                - map:
+                    conditions:
+                      icon == "audio-speakers":
+                        string: {text: "󰤽", font: *icons, left-margin: 8, <<: *vol}
+                      icon == "audio-card-analog":
+                        string: {text: "󰓃", font: *icons, left-margin: 8, <<: *vol}
                 - ramp:
                     tag: cubic_volume
                     items:
-                      - string: {text: "", font: *icons, left-margin: 8, <<: *vol}
-                      - string: {text: "", font: *icons, left-margin: 8, <<: *vol}
-                      - string: {text: "", font: *icons, left-margin: 8, <<: *vol}
+                      - string: {text: "", font: *icons, left-margin: 4, <<: *vol}
+                      - string: {text: "", font: *icons, left-margin: 4, <<: *vol}
+                      - string: {text: "", font: *icons, left-margin: 4, <<: *vol}
                 - string: {text: "{cubic_volume}%", left-margin: 4, right-margin: 8, <<: *vol}
 
 network: &network
