@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 cpu=$(vmstat | awk '/[0-9]/ { print $13 }')
 memgb=$(free -g | awk '/Mem/ { print $3 }')
@@ -10,6 +10,6 @@ disk=$(df | awk '/^\/dev/ { print $5; exit }' | tr -d "%")
 	echo "memgb|int|$memgb"
 	echo "memp|range:0-100|$memp"
 	echo "disk|range:0-100|$disk"
-	echo
+	echo ""
 	# sleep 10
 # done
