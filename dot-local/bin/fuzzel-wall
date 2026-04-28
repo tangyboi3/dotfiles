@@ -1,5 +1,6 @@
 #!/bin/sh
 
+killall fuzzel
 anchor=$([ $# != 0 ] && echo -a "$1")
 dir="$HOME/.local/share/wallpapers"
 

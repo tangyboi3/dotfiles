@@ -55,4 +55,5 @@ pickaction () {
 	esac
 }
 
+killall fuzzel
 pickssid && pickaction

@@ -9,7 +9,7 @@ set {
      $right l
 
      $term foot
-     $menu fuzzel
+     $menu "pkill fuzzel; fuzzel"
 }
 
 focus_follows_mouse no
