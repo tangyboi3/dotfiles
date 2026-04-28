@@ -2,12 +2,6 @@ set {
      # mod key
      $mod Mod4
 
-     # Vim keys
-     $left h
-     $down j
-     $up k
-     $right l
-
      $term foot
      $menu "pkill fuzzel; fuzzel"
 }
