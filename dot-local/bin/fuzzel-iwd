@@ -1,7 +1,5 @@
 #!/bin/sh
 
-yn=$(echo "Yes"; echo "No")
-
 pickssid () {
 	iwctl station wlan0 scan
 	conn=$(iwctl station wlan0 show | grep 'Connected ' | sed 's/.*Connected network *//')
@@ -14,7 +12,7 @@ pickssid () {
 	if [ -z "$ssidpick" ]; then
 		exit 1
 	elif [ "$ssidpick" = "Reload" ]; then
-		pickssid
+		pickssid "$@"
 	elif [ "$ssidpick" = "$conn" ]; then
 		actions="Disconnect\nForget\nBack\n"
 	elif [ "$(iwctl known-networks list | grep -wc "$ssidpick")" -ge 1 ]; then
@@ -25,18 +23,18 @@ pickssid () {
 }
 
 pickaction () {
-	actionpick=$(printf '%b' $actions | fuzzel --dmenu "$@" --placeholder "$ssidpick" -l "$(printf '%b' $actions | wc -l)")
+	actionpick=$(printf '%b' "$actions" | fuzzel --dmenu "$@" --placeholder "$ssidpick" -l "$(printf '%b' "$actions" | wc -l)")
 	case $actionpick in
 		*"Connect")
 			iwctl station wlan0 connect "$ssidpick";;
 		*"Disconnect")
 			iwctl station wlan0 disconnect;;
 		*"Forget")
-			confirm=$(echo "$yn" | fuzzel --dmenu "$@" --placeholder "Confirm?" -l 2)
+			confirm=$(echo "Yes"; echo "No" | fuzzel --dmenu "$@" --placeholder "Confirm?" -l 2)
 			if [ "$confirm" = "Yes" ]; then
 				iwctl known-networks "$ssidpick" forget
 			else
-				pickaction
+				pickaction "$@"
 			fi;;
 		*"Passphrase")
 			sec=$(echo "$scan" | grep "$ssidpick" | cut -f 2)
@@ -44,15 +42,15 @@ pickaction () {
 				iwctl station wlan0 connect "$ssidpick"
 			else
 				pass=$(echo Back | fuzzel --dmenu "$@" --password -l 1)
-				[ "$pass" = "Back" ] && pickaction
+				[ "$pass" = "Back" ] && pickaction "$@"
 				iwctl --passphrase "$pass" station wlan0 connect "$ssidpick"
 			fi;;
 		*"Back")
-			pickssid && pickaction;;
+			pickssid "$@" && pickaction "$@";;
 		"")
 			exit 1;;
 	esac
 }
 
 killall fuzzel
-pickssid && pickaction
+pickssid "$@" && pickaction "$@"
