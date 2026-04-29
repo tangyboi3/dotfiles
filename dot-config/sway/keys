@@ -81,9 +81,9 @@ bindsym {
     $mod+r mode "resize"
 
     $mod+s exec grimshot copy anything
-    $mod+w exec fuzzel-iwd center
-    $mod+b exec fuzzel-wall center
-    $mod+p exec fuzzel-power center
+    $mod+w exec fuzzel-iwd
+    $mod+b exec fuzzel-wall
+    $mod+p exec fuzzel-power
     XF86PowerOff exec fuzzel-power
 }
 

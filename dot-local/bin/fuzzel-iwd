@@ -1,6 +1,5 @@
 #!/bin/sh
 
-anchor=$([ $# != 0 ] && echo -a "$1")
 yn=$(echo "Yes"; echo "No")
 
 pickssid () {
@@ -11,7 +10,7 @@ pickssid () {
 	# sort by dBm
 	ssids=$(echo "Reload"; echo "$conn"; echo "$scan" | awk -F'\t' '$1 !~ />/ { print $3"\t"$1 }' | sort | cut -f 2-)
 
-	ssidpick=$(echo "$ssids" | fuzzel --dmenu $anchor --placeholder "$conn" -l "$(echo "$ssids" | wc -l)")
+	ssidpick=$(echo "$ssids" | fuzzel --dmenu "$@" --placeholder "$conn" -l "$(echo "$ssids" | wc -l)")
 	if [ -z "$ssidpick" ]; then
 		exit 1
 	elif [ "$ssidpick" = "Reload" ]; then
@@ -26,14 +25,14 @@ pickssid () {
 }
 
 pickaction () {
-	actionpick=$(printf '%b' $actions | fuzzel --dmenu $anchor --placeholder "$ssidpick" -l "$(printf '%b' $actions | wc -l)")
+	actionpick=$(printf '%b' $actions | fuzzel --dmenu "$@" --placeholder "$ssidpick" -l "$(printf '%b' $actions | wc -l)")
 	case $actionpick in
 		*"Connect")
 			iwctl station wlan0 connect "$ssidpick";;
 		*"Disconnect")
 			iwctl station wlan0 disconnect;;
 		*"Forget")
-			confirm=$(echo "$yn" | fuzzel --dmenu $anchor --placeholder "Confirm?" -l 2)
+			confirm=$(echo "$yn" | fuzzel --dmenu "$@" --placeholder "Confirm?" -l 2)
 			if [ "$confirm" = "Yes" ]; then
 				iwctl known-networks "$ssidpick" forget
 			else
@@ -44,7 +43,7 @@ pickaction () {
 			if [ "$sec" = "open" ]; then
 				iwctl station wlan0 connect "$ssidpick"
 			else
-				pass=$(echo Back | fuzzel --dmenu $anchor --password -l 1)
+				pass=$(echo Back | fuzzel --dmenu "$@" --password -l 1)
 				[ "$pass" = "Back" ] && pickaction
 				iwctl --passphrase "$pass" station wlan0 connect "$ssidpick"
 			fi;;

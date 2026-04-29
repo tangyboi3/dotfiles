@@ -1,14 +1,13 @@
 #!/bin/sh
 
 killall fuzzel
-anchor=$([ $# != 0 ] && echo -a "$1")
 dir="$HOME/.local/share/wallpapers"
 
-img=$(ls "$dir" | fuzzel --dmenu $anchor -l $(ls "$dir" | wc -l))
+img=$(ls "$dir" | fuzzel --dmenu "$@" -l $(ls "$dir" | wc -l))
 [ -z "$img" ] && exit 1
-back=$(printf "colorz\nfast_colorthief\nhaishoku\nwal" | fuzzel --dmenu $anchor -l 4)
+back=$(printf "colorz\nfast_colorthief\nhaishoku\nwal" | fuzzel --dmenu "$@" -l 4)
 [ -z "$back" ] && exit 1
-cols16=$(printf "only 8\nlight 16\ndark 16" | fuzzel --dmenu $anchor -l 3)
+cols16=$(printf "only 8\nlight 16\ndark 16" | fuzzel --dmenu "$@" -l 3)
 [ -z "$cols16" ] && exit 1
 
 case $cols16 in

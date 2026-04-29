@@ -1,8 +1,7 @@
 #!/bin/sh
 
 killall fuzzel
-anchor=$([ $# != 0 ] && echo -a $1)
-pick=$(printf "󰍃 Logout\n󰤄 Sleep\n Restart\n Shutdown" | fuzzel --dmenu $anchor -w 15 -l 4)
+pick=$(printf "󰍃 Logout\n󰤄 Sleep\n Restart\n Shutdown" | fuzzel --dmenu "$@" -w 15 -l 4)
 [ -z $pick ] && exit 1
 
 case $pick in
