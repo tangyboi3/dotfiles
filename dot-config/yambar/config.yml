@@ -55,12 +55,12 @@ stats: &stats
 wall: &wall
   label:
     content:
-      string: {text: "󰸉", margin: 8, <<: *c1b, font: *icons, on-click: "fuzzel-wall top-left"}
+      string: {text: "󰸉", margin: 8, <<: *c1b, font: *icons, on-click: "fuzzel-wall -a top-left"}
 
 power: &power
   label:
     content:
-      string: {text: "", margin: 8, <<: *fgb, font: *icons, on-click: "fuzzel-power top-right"}
+      string: {text: "", margin: 8, <<: *fgb, font: *icons, on-click: "fuzzel-power -a top-right"}
 
 pipewire: &pipewire
   pipewire:
@@ -115,8 +115,8 @@ network: &network
             list:
               spacing: 0
               items:
-                - string: {text: "", left-margin: 8, font: *icons, <<: *bgb, on-click: "fuzzel-iwd top-right"}
-                - string: {text: "{signal}dBm", left-margin: 4, right-margin: 8, <<: *bgb, on-click: "fuzzel-iwd top-right"}
+                - string: {text: "", left-margin: 8, font: *icons, <<: *bgb, on-click: "fuzzel-iwd -a top-right"}
+                - string: {text: "{signal}dBm", left-margin: 4, right-margin: 8, <<: *bgb, on-click: "fuzzel-iwd -a top-right"}
           carrier && name < eo:
             string: {text: "", margin: 8, <<: *bgb}
 
