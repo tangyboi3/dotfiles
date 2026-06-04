@@ -81,6 +81,7 @@ bindsym {
     $mod+r mode "resize"
 
     $mod+s exec grimshot copy anything
+    $mod+Shift+s exec grimshot savecopy anything
     $mod+w exec fuzzel-iwd
     $mod+b exec fuzzel-wall
     $mod+p exec fuzzel-power
