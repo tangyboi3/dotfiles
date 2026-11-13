@@ -1,2 +1,14 @@
 [mgr]
 show_hidden = true
+
+[open]
+prepend_rules = [
+	{ url = "*.yml", use = [ "edit" ] },
+	{ url = "*.yaml", use = [ "edit" ] },
+]
+
+[plugin]
+prepend_previewers = [
+	{ url = "*.yml", run = "json" },
+	{ url = "*.yaml", run = "json" },
+]
