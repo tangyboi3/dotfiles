@@ -96,3 +96,8 @@ bindsym --locked {
     XF86MonBrightnessDown exec brightnessctl set 5%-
     XF86MonBrightnessUp exec brightnessctl set 5%+
 }
+
+bindswitch --locked {
+    lid:on output eDP-1 power off
+    lid:off output eDP-1 power on
+}
