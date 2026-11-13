@@ -22,8 +22,8 @@ c14b: &c14b {deco: {background: {color: *c14}}, foreground: *bg}
 c15b: &c15b {deco: {background: {color: *c15}}, foreground: *bg}
 
 # Fonts
-ios: &ios Iosevka:size=16:fontfeatures=ss20:style=bold
-icons: &icons Symbols Nerd Font:size=16
+ios: &ios Iosevka:size=32:fontfeatures=ss20:style=bold
+icons: &icons Symbols Nerd Font:size=32
 
 # Modules
 
@@ -35,8 +35,8 @@ updates: &updates
       list:
         spacing: 0
         items:
-          - string: {text: "󰮯", left-margin: 8, font: *icons, <<: *bgb}
-          - string: {text: "{updates} available", left-margin: 4, right-margin: 8, <<: *bgb}
+          - string: {text: "󰮯", left-margin: 16, font: *icons, <<: *bgb}
+          - string: {text: "{updates} available", left-margin: 8, right-margin: 16, <<: *bgb}
 
 stats: &stats
   script:
@@ -46,21 +46,21 @@ stats: &stats
       list:
         spacing: 0
         items:
-          - string: {text: "", left-margin: 8, font: *icons, <<: *bgb}
-          - string: {text: "{cpu}%", left-margin: 4, right-margin: 8, <<: *bgb}
-          - string: {text: "", left-margin: 8, font: *icons, <<: *bgb}
-          - string: {text: "{memgb}GB", left-margin: 4, right-margin: 8, <<: *bgb}
-          # - string: {text: "{disk}%", left-margin: 8, <<: *bgb}
+          - string: {text: "", left-margin: 16, font: *icons, <<: *bgb}
+          - string: {text: "{cpu}%", left-margin: 8, right-margin: 16, <<: *bgb}
+          - string: {text: "", left-margin: 16, font: *icons, <<: *bgb}
+          - string: {text: "{memgb}GB", left-margin: 8, right-margin: 16, <<: *bgb}
+          # - string: {text: "{disk}%", left-margin: 16, <<: *bgb}
 
 wall: &wall
   label:
     content:
-      string: {text: "󰸉", margin: 8, <<: *c1b, font: *icons, on-click: "fuzzel-wall -a top-left"}
+      string: {text: "󰸉", margin: 16, <<: *c1b, font: *icons, on-click: "fuzzel-wall -a top-left"}
 
 power: &power
   label:
     content:
-      string: {text: "", margin: 8, <<: *fgb, font: *icons, on-click: "fuzzel-power -a top-right"}
+      string: {text: "", margin: 16, <<: *fgb, font: *icons, on-click: "fuzzel-power -a top-right"}
 
 pipewire: &pipewire
   pipewire:
@@ -82,11 +82,11 @@ pipewire: &pipewire
                 - map:
                     conditions:
                       icon == "audio-speakers":
-                        string: {text: "󰤽", font: *icons, left-margin: 8, <<: *vol}
+                        string: {text: "󰤽", font: *icons, left-margin: 16, <<: *vol}
                       icon == "audio-card-analog":
-                        string: {text: "󰓃", font: *icons, left-margin: 8, <<: *vol}
-              # - string: {text: "", left-margin: 4, font: *icons, <<: *vol} wait do i even need this icon anymore
-                - string: {text: "MUTED", left-margin: 4, right-margin: 8, <<: *vol}
+                        string: {text: "󰓃", font: *icons, left-margin: 16, <<: *vol}
+              # - string: {text: "", left-margin: 8, font: *icons, <<: *vol} wait do i even need this icon anymore
+                - string: {text: "MUTED", left-margin: 8, right-margin: 16, <<: *vol}
           type == "sink" && ~muted:
             list:
               spacing: 0
@@ -94,16 +94,16 @@ pipewire: &pipewire
                 - map:
                     conditions:
                       icon == "audio-speakers":
-                        string: {text: "󰤽", font: *icons, left-margin: 8, <<: *vol}
+                        string: {text: "󰤽", font: *icons, left-margin: 16, <<: *vol}
                       icon == "audio-card-analog":
-                        string: {text: "󰓃", font: *icons, left-margin: 8, <<: *vol}
+                        string: {text: "󰓃", font: *icons, left-margin: 16, <<: *vol}
                #- ramp:
                #    tag: cubic_volume
                #    items:
-               #      - string: {text: "", font: *icons, left-margin: 4, <<: *vol}
-               #      - string: {text: "", font: *icons, left-margin: 4, <<: *vol}
-               #      - string: {text: "", font: *icons, left-margin: 4, <<: *vol}
-                - string: {text: "{cubic_volume}%", left-margin: 4, right-margin: 8, <<: *vol}
+               #      - string: {text: "", font: *icons, left-margin: 8, <<: *vol}
+               #      - string: {text: "", font: *icons, left-margin: 8, <<: *vol}
+               #      - string: {text: "", font: *icons, left-margin: 8, <<: *vol}
+                - string: {text: "{cubic_volume}%", left-margin: 8, right-margin: 16, <<: *vol}
 
 network: &network
   network:
@@ -115,10 +115,10 @@ network: &network
             list:
               spacing: 0
               items:
-                - string: {text: "", left-margin: 8, font: *icons, <<: *bgb, on-click: "fuzzel-iwd -a top-right"}
-                - string: {text: "{signal}dBm", left-margin: 4, right-margin: 8, <<: *bgb, on-click: "fuzzel-iwd -a top-right"}
+                - string: {text: "", left-margin: 16, font: *icons, <<: *bgb, on-click: "fuzzel-iwd -a top-right"}
+                - string: {text: "{signal}dBm", left-margin: 8, right-margin: 16, <<: *bgb, on-click: "fuzzel-iwd -a top-right"}
           carrier && name < eo:
-            string: {text: "", margin: 8, <<: *bgb}
+            string: {text: "", margin: 16, <<: *bgb}
 
 battery: &battery
   battery:
@@ -127,7 +127,7 @@ battery: &battery
     content:
       map:
         conditions:
-          capacity != 0: {string: {text: "󰁹 {capacity}%", margin: 8, <<: *bgb}}
+          capacity != 0: {string: {text: "󰁹 {capacity}%", margin: 16, <<: *bgb}}
 
 clock: &clock
   clock:
@@ -135,13 +135,13 @@ clock: &clock
     time-format: "%H:%M"
     date-format: "%a, %b %d"
     content:
-      string: {text: "{time} | {date}", margin: 8, <<: *c2b}
+      string: {text: "{time} | {date}", margin: 16, <<: *c2b}
 
 i3: &i3
   i3:
     sort: ascending
     anchors:
-      - string: &default {text:  "{name}", margin: 8, on-click: "swaymsg --quiet workspace {name}"}
+      - string: &default {text:  "{name}", margin: 16, on-click: "swaymsg --quiet workspace {name}"}
       - focused: &focused {foreground: *bg, <<: *c2b}
     content:
       "":
@@ -152,7 +152,7 @@ i3: &i3
 
 bar:
   monitor: DP-1 # How's this gonna work with a laptop?
-  height: 24
+  height: 48
   location: top
 
   font: *ios
