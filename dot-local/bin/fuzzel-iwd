@@ -6,7 +6,7 @@ pickssid () {
 	# remove colorcodes and replace 2+ spaces with tabs
 	scan=$(iwctl station wlan0 get-networks rssi-dbms | tail -n +5 | sed -E 's/\x1B\[[0-9;]*[JKmsu]//g; s/\s{2,}/\t/g; s/^\s//')
 	# sort by dBm
-	ssids=$(echo "Reload"; echo "$conn"; echo "$scan" | awk -F'\t' '$1 !~ />/ { print $3"\t"$1 }' | sort | cut -f 2-)
+	ssids=$(echo "Reload"; echo ">$conn"; echo "$scan" | awk -F'\t' '$1 !~ />/ { print $3"\t"$1 }' | sort | cut -f 2-)
 
 	ssidpick=$(echo "$ssids" | fuzzel --dmenu "$@" --placeholder "$conn" -l "$(echo "$ssids" | wc -l)")
 	if [ -z "$ssidpick" ]; then

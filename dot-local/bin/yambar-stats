@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cpu=$(vmstat | awk '/[0-9]/ { print $13 }')
+cpu=$(vmstat | awk '/[0-9]/ { print $13 + $18 }')
 memgb=$(free -g | awk '/Mem/ { print $3 }')
 memp=$(free | awk '/Mem/ { print int($3/$2*10+.5) }')
 disk=$(df | awk '/^\/dev/ { print $5; exit }' | tr -d "%")

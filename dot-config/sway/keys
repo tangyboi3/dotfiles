@@ -82,6 +82,7 @@ bindsym {
 
     $mod+s exec grimshot copy anything
     $mod+Shift+s exec grimshot savecopy anything
+    $mod+Alt+s exec grimshot copy output
     $mod+w exec fuzzel-iwd
     $mod+b exec fuzzel-wall
     $mod+p exec fuzzel-power
