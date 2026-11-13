@@ -13,7 +13,7 @@ pickssid () {
 		exit 1
 	elif [ "$ssidpick" = "Reload" ]; then
 		pickssid "$@"
-	elif [ "$ssidpick" = "$conn" ]; then
+	elif [ "$ssidpick" = ">$conn" ]; then
 		actions="Disconnect\nForget\nBack\n"
 	elif [ "$(iwctl known-networks list | grep -wc "$ssidpick")" -ge 1 ]; then
 		actions="Connect\nForget\nBack\n"
