@@ -111,7 +111,7 @@ network: &network
     content:
       map:
         conditions:
-          name > wl && state == "up":
+          state != down && name > wl:
             list:
               spacing: 0
               items:
