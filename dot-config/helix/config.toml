@@ -24,3 +24,7 @@ e = [
   ":set mouse false",
   ":set mouse true",
 ]
+
+t = [
+  ":sh echo %{buffer_name} | sed 's/.typ/.pdf/' | xargs pdf-docx"
+]
