@@ -25,6 +25,13 @@ function y() {
     rm -f -- "$tmp"
 }
 
+ssh() {
+    command ssh "$@"
+    local ssh_status=$?
+    source ~/.zshrc
+    return $ssh_status
+}
+
 alias ls="ls --color=auto"
 alias grep="grep --color=auto"
 alias logout="loginctl terminate-user tangy"
