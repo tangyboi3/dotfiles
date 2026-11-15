@@ -3,7 +3,7 @@
 ## Dependencies
 ```bash
 sudo pacman -S sway swaybg sway-contrib zsh stow foot yazi gammastep ttf-iosevka-nerd udiskie
-paru -S python-pywal16 yambar-wayland zen-browser-bin
+paru -S python-pywal16 maybar-git zen-browser-bin
 ```
 
 ## Clone and stow

@@ -5,6 +5,6 @@ exec {
 }
 
 exec_always {
-    killall yambar; yambar-wal
+    killall maybar; yambar-wal
     autotiling
 }
