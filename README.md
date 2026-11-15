@@ -2,7 +2,7 @@
 
 ## Dependencies
 ```bash
-sudo pacman -S sway swaybg sway-contrib zsh stow foot yazi gammastep ttc-iosevka ttf-nerd-fonts-symbols udiskie helix typst tinymist
+sudo pacman -S sway swaybg sway-contrib zsh stow foot yazi gammastep ttc-iosevka ttf-nerd-fonts-symbols udiskie helix typst tinymist pacman-contrib
 paru -S python-pywal16 colorz python-fast-colorthief python-haishoku maybar-git
 ```
 
