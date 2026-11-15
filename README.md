@@ -2,8 +2,8 @@
 
 ## Dependencies
 ```bash
-sudo pacman -S sway swaybg sway-contrib zsh stow foot yazi gammastep ttf-iosevka-nerd udiskie
-paru -S python-pywal16 maybar-git zen-browser-bin
+sudo pacman -S sway swaybg sway-contrib zsh stow foot yazi gammastep ttc-iosevka ttf-nerd-fonts-symbols udiskie helix typst tinymist
+paru -S python-pywal16 colorz python-fast-colorthief python-haishoku maybar-git
 ```
 
 ## Clone and stow
@@ -13,6 +13,7 @@ cd dotfiles
 stow . --dotfiles -t ~
 chmod +x ~/.local/bin/*
 wal -i ~/.local/share/wallpapers/
+chsh -s /usr/bin/zsh
 ```
 
-TODO: pywalfox, brightness control, clipboard script, fix iwctl script
+TODO: pywalfox, brightness control, clipboard script
