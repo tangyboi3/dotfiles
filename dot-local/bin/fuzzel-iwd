@@ -30,7 +30,7 @@ pickaction () {
 		*"Disconnect")
 			iwctl station wlan0 disconnect;;
 		*"Forget")
-			confirm=$(echo "Yes"; echo "No" | fuzzel --dmenu "$@" --placeholder "Confirm?" -l 2)
+			confirm=$(printf '%b' "Yes\nNo" | fuzzel --dmenu "$@" --placeholder "Confirm?" -l 2)
 			if [ "$confirm" = "Yes" ]; then
 				iwctl known-networks "$ssidpick" forget
 			else
