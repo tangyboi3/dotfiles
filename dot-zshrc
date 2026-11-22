@@ -3,25 +3,19 @@ HISTSIZE=1000
 SAVEHIST=1000
 setopt autocd extendedglob nomatch notify
 bindkey -v
-zstyle :compinstall filename '/home/tangy/.zshrc'
 
-autoload -Uz compinit promptinit
+autoload -Uz compinit
 compinit
-promptinit 
+
+zstyle ':completion:*' menu select
 
 PROMPT='%B%(?..[%?] )%b%n@%U%m%u> '
-RPROMPT="%F{${1:-green}}%~%f"
-
+RPROMPT="%F{green}%~%f"
 if [ -n "$YAZI_LEVEL" ]; then
     PROMPT="$(echo $PROMPT | sed s/u/u:yazi/)"
 fi
 
-zstyle ':completion:*' menu select
-
-(cat ~/.cache/wal/sequences &)
-#neofetch
-
-function y() {
+y() {
     local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
     yazi "$@" --cwd-file="$tmp"
     if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
@@ -43,10 +37,6 @@ alias logout="loginctl terminate-user tangy"
 alias yambar="yambar-wal"
 alias hx="helix"
 
-## [Completion]
-## Completion scripts setup. Remove the following line to uninstall
-[[ -f /home/tangy/.dart-cli-completion/zsh-config.zsh ]] && . /home/tangy/.dart-cli-completion/zsh-config.zsh || true
-## [/Completion]
-
+(cat ~/.cache/wal/sequences &)
 
 [ -f "/home/tangy/.ghcup/env" ] && . "/home/tangy/.ghcup/env" # ghcup-env
