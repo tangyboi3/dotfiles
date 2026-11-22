@@ -10,9 +10,9 @@ compinit
 zstyle ':completion:*' menu select
 
 PROMPT='%B%(?..[%?] )%b%n@%U%m%u> '
-RPROMPT="%F{green}%~%f"
+RPROMPT="%F{yellow}%~%f"
 if [ -n "$YAZI_LEVEL" ]; then
-    PROMPT="$(echo $PROMPT | sed s/u/u:yazi/)"
+    PROMPT="$(echo $PROMPT | sed 's/b/b%F{cyan}(yazi)%f/')"
 fi
 
 y() {
