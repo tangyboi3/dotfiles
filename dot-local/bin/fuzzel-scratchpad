@@ -1,0 +1,27 @@
+#!/bin/sh
+
+killall fuzzel
+pick=$(swaymsg -t get_tree \
+  | jq --raw-output '
+    .nodes[]
+    | select(.name=="__i3")
+      | .nodes[]
+      | select(.name=="__i3_scratch")
+        | .floating_nodes[]
+        | (.id|tostring)
+          + " | "
+          + ( if .name != null then
+              (.name) + " "
+            else
+              ""
+            end )
+          + ( if .marks != [] then
+            "["+(.marks|join(","))+"]"
+            else
+              ""
+            end )
+    ' | fuzzel "$@" --dmenu --minimal-lines
+)
+
+[ -z $pick ] && exit 1
+swaymsg "[con_id=${pick%% |*}] focus"
