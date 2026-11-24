@@ -1,14 +1,14 @@
 #!/bin/sh
 
+	delim=$(printf '\037')
+
 pickssid () {
 	iwctl station wlan0 scan
-	conn=$(iwctl station wlan0 show | grep 'Connected ' | sed 's/.*Connected network *//')
-	# remove colorcodes and replace 2+ spaces with tabs
-	scan=$(iwctl station wlan0 get-networks rssi-dbms | tail -n +5 | sed -E 's/\x1B\[[0-9;]*[JKmsu]//g; s/\s{2,}/\t/g; s/^\s//')
-	# sort by dBm
-	ssids=$(echo "Reload"; echo ">$conn"; echo "$scan" | awk -F'\t' '$1 !~ />/ { print $3"\t"$1 }' | sort | cut -f 2-)
+	conn=$(iwctl station wlan0 show | grep 'Connected ' | sed -E "s/ {2,}/$delim/g; s/^$delim//" | cut -d $delim -f 2)
+	scan=$(iwctl station wlan0 get-networks rssi-dbms | tail -n +6 | head -n -1 | sed -E "s/ {2,}/$delim/g; s/^$delim//" | sort -t $delim -k 3,3)
+	ssids=$(echo "Reload"; echo "* $conn"; printf '%b' "$scan" | cut -d $delim -f 1)
 
-	ssidpick=$(echo "$ssids" | fuzzel --dmenu "$@" --placeholder "$conn" --minimal-lines)
+	ssidpick=$(echo "$ssids" | fuzzel --dmenu "$@" --placeholder "iwd-wifi" --minimal-lines -w 20)
 	if [ -z "$ssidpick" ]; then
 		exit 1
 	elif [ "$ssidpick" = "Reload" ]; then
@@ -23,7 +23,7 @@ pickssid () {
 }
 
 pickaction () {
-	actionpick=$(printf '%b' "$actions" | fuzzel --dmenu "$@" --placeholder "$ssidpick" --minimal-lines)
+	actionpick=$(printf '%b' "$actions" | fuzzel --dmenu "$@" --placeholder "$ssidpick" --minimal-lines -w 20)
 	case $actionpick in
 		*"Connect")
 			iwctl station wlan0 connect "$ssidpick";;
