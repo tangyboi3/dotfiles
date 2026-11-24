@@ -55,7 +55,7 @@ stats: &stats
 wall: &wall
   label:
     content:
-      string: {text: "󰸉", margin: 8, <<: *c1b, font: *icons, on-click: "fuzzel-wall -a top-left"}
+      string: {text: "󰟾", margin: 8, <<: *c1b, font: *icons, on-click: "fuzzel-wall -a top-left"}
 
 power: &power
   label:
