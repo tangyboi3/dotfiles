@@ -16,4 +16,9 @@ wal -i ~/.local/share/wallpapers/
 chsh -s /usr/bin/zsh
 ```
 
+## Ignore logind.conf lid and power key bindings
+```bash
+cat /etc/systemd/logind.conf | grep 'Handle\(Lid\|Power\)' | sed 's/#//; s/=.*/=ignore/' | sudo tee -a /etc/systemd/logind.conf
+```
+
 TODO: pywalfox, brightness control, clipboard script
